@@ -368,7 +368,8 @@ visitors &lt;- read_csv(&quot;data/UK-visitor-numbers.csv&quot;)</code></pre>
 <h1>Wrangling Data</h1>
 <div id="question-1" class="section level2">
 <h2>Question 1</h2>
-<p><em>How many tourist attractions are there in the data set?</em></p>
+<p><em>How many tourist attractions are there in the data set?</em>
+There are 348 tourist attractions in the data set.</p>
 <pre class="r"><code>visitors %&gt;% count()</code></pre>
 <pre><code>## # A tibble: 1 × 1
 ##       n
@@ -378,17 +379,40 @@ visitors &lt;- read_csv(&quot;data/UK-visitor-numbers.csv&quot;)</code></pre>
 <h3>Exercise a.</h3>
 <p><em>Create a frequency table of the number of tourist attractions in
 the data set by <code>region</code>.</em></p>
-<pre class="r"><code># Delete the comment &#39;#&#39; symbol at the start of the next line and complete the code. 
-
-#visitors %&gt;% count(_____)</code></pre>
+<pre class="r"><code>visitors %&gt;% count(region)</code></pre>
+<pre><code>## # A tibble: 12 × 2
+##    region                       n
+##    &lt;chr&gt;                    &lt;int&gt;
+##  1 East Midlands                9
+##  2 East of England             26
+##  3 London                      39
+##  4 North East                  25
+##  5 North West                  21
+##  6 Northern Ireland             9
+##  7 Scotland                    97
+##  8 South East                  34
+##  9 South West                  30
+## 10 Wales                        2
+## 11 West Midlands               35
+## 12 Yorkshire and the Humber    21</code></pre>
 </div>
 <div id="exercise-b." class="section level3">
 <h3>Exercise b.</h3>
 <p><em>Create a frequency table by <code>admission</code> and
 <code>setting</code>.</em></p>
-<pre class="r"><code># Delete the comment &#39;#&#39; symbol at the start of the next line and complete the code.
-
-#visitors %&gt;% count(_____, _____)</code></pre>
+<pre class="r"><code>visitors %&gt;% count(admission, setting)</code></pre>
+<pre><code>## # A tibble: 9 × 3
+##   admission setting     n
+##   &lt;chr&gt;     &lt;chr&gt;   &lt;int&gt;
+## 1 Charged   I          21
+## 2 Charged   M          12
+## 3 Charged   O           5
+## 4 Free      I          77
+## 5 Free      M           8
+## 6 Free      O          43
+## 7 Members   I          23
+## 8 Members   M         106
+## 9 Members   O          53</code></pre>
 </div>
 </div>
 <div id="question-2" class="section level2">
@@ -401,6 +425,8 @@ the data set by <code>region</code>.</em></p>
 ##   attraction n_2021  n_2022  admission setting   region   
 ##   &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;    
 ## 1 character  numeric numeric character character character</code></pre>
+<p>attraction=chr, n_2021 = numeric, n_2022 = numeric, admission = chr,
+setting = chr, region = chr</p>
 </div>
 <div id="question-3" class="section level2">
 <h2>Question 3</h2>
@@ -421,12 +447,32 @@ the data set by <code>region</code>.</em></p>
 ##  9 Science Museum                         9.56e5 2.33e6 Free      I       London
 ## 10 Tower of London                        5.26e5 2.02e6 Members   M       London
 ## # ℹ 338 more rows</code></pre>
+<p>The Crown Estate, Windsor Great Park, had the most visitors in
+2022.</p>
 <div id="exercise-c." class="section level3">
 <h3>Exercise c.</h3>
 <p><em>What are the top 10 most visited attractions in 2021?</em></p>
-<pre class="r"><code>#visitors %&gt;% 
-#  arrange(____(____)) %&gt;%
-#  head(n = ____)</code></pre>
+<pre class="r"><code>visitors %&gt;% 
+  arrange(desc(n_2021)) %&gt;%
+  head(n = 10)</code></pre>
+<pre><code>## # A tibble: 10 × 6
+##    attraction                             n_2021 n_2022 admission setting region
+##    &lt;chr&gt;                                   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; 
+##  1 The Crown Estate, Windsor Great Park   5.40e6 5.64e6 Free      O       South…
+##  2 Royal Botanic Gardens Kew              1.96e6 1.96e6 Members   M       London
+##  3 Natural History Museum (South Kensing… 1.57e6 4.65e6 Free      I       London
+##  4 RHS Garden Wisley                      1.41e6 1.49e6 Members   O       South…
+##  5 The British Museum                     1.33e6 4.10e6 Free      I       London
+##  6 Tate Modern                            1.16e6 3.88e6 Free      I       London
+##  7 Somerset House                         9.85e5 2.35e6 Free      M       London
+##  8 Science Museum                         9.56e5 2.33e6 Free      I       London
+##  9 Jeskyns Community Woodland             8.79e5 4.47e5 Free      O       South…
+## 10 V&amp;A South Kensington                   8.58e5 2.37e6 Free      I       London</code></pre>
+<p>The 10 most visited attractions in 2022 are, in order: The Crown
+Estate, Windsor Great Park, Royal Botanic Gardens Kew, Natural History
+Museum (South Kensington), RHS Garden Wisley, The British Museum, Tate
+Modern, Somerset House, Science Museum, Jeskyns Community Woodland, and
+V&amp;A South Kensington.</p>
 </div>
 </div>
 <div id="question-4" class="section level2">
@@ -438,18 +484,31 @@ the data set by <code>region</code>.</em></p>
 ##   attraction                  n_2021  n_2022 admission setting region  
 ##   &lt;chr&gt;                        &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;   
 ## 1 National Museum of Scotland 660741 1973751 Free      I       Scotland</code></pre>
+<p>The National Museum of Scotland has an admission charge of $0,
+free.</p>
 <div id="exercise-d." class="section level3">
 <h3>Exercise d.</h3>
 <p><em>Which attraction had exactly 565,772 visitors in 2022?</em></p>
-<pre class="r"><code>#visitors %&gt;% filter(___ == ____)</code></pre>
+<pre class="r"><code>visitors %&gt;% filter(n_2022 == 565772)</code></pre>
+<pre><code>## # A tibble: 1 × 6
+##   attraction                        n_2021 n_2022 admission setting region    
+##   &lt;chr&gt;                              &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
+## 1 Knowsley Safari and Knowsley Hall     NA 565772 Members   M       North West</code></pre>
+<p>Knowsley Safari and Knowsley Hall had exactly 565,772 visitors in
+2022.</p>
 </div>
 <div id="exercise-e." class="section level3">
 <h3>Exercise e.</h3>
 <p><em>How many attraction had more than 1 million visitors in
 2022?</em></p>
-<pre class="r"><code>#visitors %&gt;% 
-#  filter(____) %&gt;%
-#  count()</code></pre>
+<pre class="r"><code>visitors %&gt;% 
+  filter(n_2022 &gt; 1000000) %&gt;%
+  count()</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##       n
+##   &lt;int&gt;
+## 1    22</code></pre>
+<p>22 attractions had more than 1 million visitors in 2022.</p>
 </div>
 </div>
 <div id="question-5" class="section level2">
@@ -470,24 +529,38 @@ visitors in 2022?</em></p>
 ##       n
 ##   &lt;int&gt;
 ## 1     3</code></pre>
+<p>There are three outside attractions in the Yorkshire and the Humber
+region that only give admission to Members and had 100,000 or more
+visitors in 2022.</p>
 <div id="exercise-f." class="section level3">
 <h3>Exercise f.</h3>
 <p><em>How many attractions had between 50,000 and 100,000 visitors in
 2022?</em></p>
-<pre class="r"><code>#visitors %&gt;% 
-#  ____(
-#    ______,
-#    ______ ) %&gt;%
-#  count()</code></pre>
+<pre class="r"><code>visitors %&gt;% 
+  filter(
+    50000 &lt; n_2022,
+    100000 &gt; n_2022) %&gt;%
+  count()</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##       n
+##   &lt;int&gt;
+## 1    50</code></pre>
+<p>50 attractions had between 50,000 and 100,000 visitors in 2022.</p>
 </div>
 <div id="exercise-g." class="section level3">
 <h3>Exercise g.</h3>
 <p><em>How many regions have more than 50 tourist attraction in the data
-set? (Hint: You will need to tabulate the data before
+set? (Hint: You will need to tabulate, or count, the data before
 filtering.)</em></p>
-<pre class="r"><code>#visitors %&gt;% 
-#  _____(region) %&gt;%
-#  filter(______)</code></pre>
+<pre class="r"><code>visitors %&gt;% 
+  count(region) %&gt;%
+  filter(n &gt; 50)</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##   region       n
+##   &lt;chr&gt;    &lt;int&gt;
+## 1 Scotland    97</code></pre>
+<p>Scotland is the only region with more than 50 tourist attractions in
+the data set.</p>
 </div>
 </div>
 </div>
@@ -506,22 +579,30 @@ attractions?</em></p>
 ##   mean_2022 med_2022
 ##       &lt;dbl&gt;    &lt;dbl&gt;
 ## 1   351942.  184640.</code></pre>
+<p>mean_2022 = 351942, med_2022 = 184639.5</p>
 <div id="exercise-h." class="section level3">
 <h3>Exercise h.</h3>
 <p><em>Perform the same calculation for the 2021 admissions
 data.</em></p>
-<pre class="r"><code>#visitors %&gt;% 
-#  ______(
-#    __________,
-#    __________
-#  )</code></pre>
+<pre class="r"><code>visitors %&gt;% 
+  summarize(
+    mean_2021 = mean(n_2021),
+    med_2021 = median(n_2021)
+  )</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##   mean_2021 med_2021
+##       &lt;dbl&gt;    &lt;dbl&gt;
+## 1        NA       NA</code></pre>
 <p>All values in the output are <code>NA</code>!</p>
 </div>
 <div id="exercise-i." class="section level3">
 <h3>Exercise i.</h3>
 <p><em>What does <code>NA</code> stand for and why are you getting this
 as your answer to the previous question.</em></p>
-<p><strong>Write your answer here</strong></p>
+<p><strong>Write your answer here</strong> ‘Na’ stands for not
+applicable. I am getting this as my answer to the previous question
+because the variable n_2021 includes NA values. In order to get an
+answer, I should include na.rm = TRUE in my code.</p>
 </div>
 <div id="exercise-j." class="section level3">
 <h3>Exercise j.</h3>
@@ -529,7 +610,17 @@ as your answer to the previous question.</em></p>
 <code>median()</code> commands to see what the input argument
 <code>na.rm</code> does. Edit your code from exercise h so that it
 computes the summary statistics where data is available.</em></p>
-<p><strong>Write your answer here</strong></p>
+<p>The input argument <code>na.rm</code> ignores all NA values so that
+calculations can be made using only the existing values.</p>
+<pre class="r"><code>visitors %&gt;% 
+  summarize(
+    mean_2021 = mean(n_2021, na.rm = TRUE),
+    med_2021 = median(n_2021, na.rm = TRUE)
+  )</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##   mean_2021 med_2021
+##       &lt;dbl&gt;    &lt;dbl&gt;
+## 1   232431.   129829</code></pre>
 </div>
 </div>
 <div id="question-7" class="section level2">
@@ -548,12 +639,16 @@ visitor numbers in 2022?</em></p>
 ## 1 I         488522.  204823 
 ## 2 M         284800.  198374.
 ## 3 O         272077.  127708</code></pre>
+<p>Inside setting attractions had the highest mean visitor numbers in
+2022.</p>
 <div id="exercise-k." class="section level3">
 <h3>Exercise k.</h3>
 <p><em>Observe in question 6 that the mean statistics across all
 settings are much larger than the corresponding median statistics.
 Discuss in your group what this suggests about the data.</em></p>
-<p><strong>Write your answer here</strong></p>
+<p><strong>Write your answer here</strong> This suggests that there are
+outliers with high values influencing the mean value that have less
+impact on the median value.</p>
 </div>
 </div>
 <div id="question-8" class="section level2">
@@ -583,13 +678,38 @@ visitors_with_nations %&gt;%
 ## 2 Northern Ireland  311046 
 ## 3 Scotland          127986 
 ## 4 Wales             103368.</code></pre>
+<p>The IQR of England is 350362.2. The IQR of Northern Ireland is
+311046. The IQR of Scotland is 127986. The IQR of Wales is 103368.5.</p>
 <div id="exercise-l." class="section level3">
 <h3>Exercise l.</h3>
 <p><em>How many tourist attractions are there in each of the 4 nations?
 From this, discuss in your group how reliable you think the
 inter-quartile estimates are.</em></p>
-<pre class="r"><code>#________ %&gt;%
-#  ______(_______)</code></pre>
+<pre class="r"><code>visitors_with_nations &lt;- visitors %&gt;%
+  mutate(
+    nation = case_when(
+      region == &quot;Northern Ireland&quot; ~ &quot;Northern Ireland&quot;,
+      region == &quot;Scotland&quot; ~ &quot;Scotland&quot;,
+      region == &quot;Wales&quot; ~ &quot;Wales&quot;,
+      TRUE ~ &quot;England&quot;
+    )
+  )
+
+visitors_with_nations %&gt;% 
+  group_by(nation) %&gt;%
+  count()</code></pre>
+<pre><code>## # A tibble: 4 × 2
+## # Groups:   nation [4]
+##   nation               n
+##   &lt;chr&gt;            &lt;int&gt;
+## 1 England            240
+## 2 Northern Ireland     9
+## 3 Scotland            97
+## 4 Wales                2</code></pre>
+<p>There are 240 tourist attractions in England, 9 in Northern Ireland,
+97 in Scotland, and 2 in Wales. I think the IQR is more accurate in
+England and Scotland than in Northern Ireland and Wales, as the sample
+size is larger and less susceptible to outliers.</p>
 </div>
 </div>
 </div>
@@ -599,7 +719,38 @@ inter-quartile estimates are.</em></p>
 <h3>Exercise m.</h3>
 <p><em>Within each of the 4 nations, what is the proportion of tourist
 attractions that have free admission for all visitors?</em></p>
-<pre class="r"><code># Write your code here</code></pre>
+<pre class="r"><code>visitors_with_nations &lt;- visitors %&gt;%
+  mutate(
+    nation = case_when(
+      region == &quot;Northern Ireland&quot; ~ &quot;Northern Ireland&quot;,
+      region == &quot;Scotland&quot; ~ &quot;Scotland&quot;,
+      region == &quot;Wales&quot; ~ &quot;Wales&quot;,
+      TRUE ~ &quot;England&quot;
+    )
+  )
+visitors_with_nations |&gt;
+  group_by(admission, nation) |&gt;
+  count() |&gt;
+  ungroup() |&gt;
+  mutate(
+    prop = n / sum(n)
+  )</code></pre>
+<pre><code>## # A tibble: 10 × 4
+##    admission nation               n    prop
+##    &lt;chr&gt;     &lt;chr&gt;            &lt;int&gt;   &lt;dbl&gt;
+##  1 Charged   England             33 0.0948 
+##  2 Charged   Northern Ireland     1 0.00287
+##  3 Charged   Scotland             4 0.0115 
+##  4 Free      England             93 0.267  
+##  5 Free      Northern Ireland     1 0.00287
+##  6 Free      Scotland            34 0.0977 
+##  7 Members   England            114 0.328  
+##  8 Members   Northern Ireland     7 0.0201 
+##  9 Members   Scotland            59 0.170  
+## 10 Members   Wales                2 0.00575</code></pre>
+<p>26.72% of attractions in England, 0.29% of attractions in Northern
+Ireland, 9.77% of attractions in Scotland, and 0% of attractions in
+Wales offer free admission.</p>
 </div>
 <div id="exercise-n." class="section level3">
 <h3>Exercise n.</h3>
@@ -607,7 +758,22 @@ attractions that have free admission for all visitors?</em></p>
 to 2022. Of the tourist attractions in Scotland, sort into increasing
 numerical order the types of admission charges based on the mean
 percentage change in visitor numbers.</em></p>
-<pre class="r"><code># Write your code here</code></pre>
+<pre class="r"><code>visitors |&gt;
+  mutate(
+    perc_change = (n_2022 - n_2021) / n_2021 * 100
+    ) |&gt;
+  filter(region == &quot;Scotland&quot;) |&gt;
+  group_by(admission) |&gt;
+  summarise(
+    mean_perc_change = mean(perc_change, na.rm = TRUE)
+  ) |&gt;
+  arrange(mean_perc_change)</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   admission mean_perc_change
+##   &lt;chr&gt;                &lt;dbl&gt;
+## 1 Charged               4.65
+## 2 Members             138.  
+## 3 Free                303.</code></pre>
 </div>
 </div>
 
